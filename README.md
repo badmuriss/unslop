@@ -40,7 +40,7 @@ Removing tells is also only half of it. Clean but voiceless text reads as AI too
 It's one Markdown file. Point any capable LLM at it as an instruction, or drop it into Claude Code:
 
 ```bash
-git clone https://github.com/badmuriss/unslop ~/.claude/skills/unslop
+npx skills add badmuriss/unslop
 ```
 
 Then ask Claude to "run unslop on this" and paste your text. The skill runs a draft pass, an audit ("what still reads as AI here?"), and a final revision.
