@@ -37,13 +37,13 @@ Removing tells is also only half of it. Clean but voiceless text reads as AI too
 
 ## Install
 
-It's one Markdown file. Point any capable LLM at it as an instruction, or drop it into Claude Code:
+It's one Markdown file, in the cross-agent [skills](https://skills.sh) format — works with Claude Code, Codex, OpenCode, Cursor, and any agent that can follow an instruction file:
 
 ```bash
 npx skills add badmuriss/unslop
 ```
 
-Then ask Claude to "run unslop on this" and paste your text. The skill runs a draft pass, an audit ("what still reads as AI here?"), and a final revision.
+Then ask your agent to "run unslop on this" and paste your text. The skill runs a draft pass, an audit ("what still reads as AI here?"), and a final revision.
 
 ## Dogfooding
 
