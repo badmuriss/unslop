@@ -1,18 +1,7 @@
 ---
 name: unslop
 version: 2.0.0
-description: |
-  Writing system that drafts, edits, audits and scores prose so it reads as
-  human. Four modes: WRITE (escrever, redigir) from a brief, EDIT (editar,
-  revisar, humanizar, "tirar cara de IA") an existing draft, DETECT (detectar
-  IA) which names the pattern and quotes the line without changing the text,
-  and SCORE (avaliar texto) with a 5-dimension rubric out of 50. Cleans two
-  layers, surface (word choice, punctuation, formatting) and narrative
-  (discourse choices), plus a dedicated Brazilian Portuguese layer, because the
-  English tell list misses pt-br slop: travessão, "estarei enviando", "no
-  cenário atual", "vale destacar", "robusto", Title Case Em Título. Use when
-  asked to write, rewrite, review, humanize, de-AI, de-slop, check if a text
-  was written by AI, score a text, or run unslop.
+description: "Sistema de escrita em 4 modos (WRITE, EDIT, DETECT, SCORE) com camada pt-br. use_when: escrever, revisar, humanizar, tirar cara de IA, detectar IA ou avaliar um texto para leitor humano. do_not_use_when: texto tecnico para maquina, como commit ou schema."
 allowed-tools:
   - Read
   - Write
