@@ -1,17 +1,17 @@
 <p align="center"><img src="docs/banner.png" width="720" alt="unslop wordmark on a dark ink background, the letters slop struck through in amber, with the tagline: a writing system that removes the AI accent"></p>
 
-<p align="center"><b>A writing system that drafts, edits, audits and scores prose so it stops sounding like a language model.</b></p>
+<p align="center"><b>A writing and content-hygiene system that drafts, edits, audits, scores and cleans AI traces.</b></p>
 
 <p align="center">
   <a href="#license"><img src="https://img.shields.io/badge/license-CC--BY--SA--4.0-blue?style=flat-square" alt="CC BY-SA 4.0 license"></a>
   <a href="https://skills.sh"><img src="https://img.shields.io/badge/agent-skill-black?style=flat-square" alt="agent skill"></a>
-  <img src="https://img.shields.io/badge/version-2.0.0-green?style=flat-square" alt="version 2.0.0">
+  <img src="https://img.shields.io/badge/version-2.1.0-green?style=flat-square" alt="version 2.1.0">
   <a href="https://github.com/badmuriss/unslop/stargazers"><img src="https://img.shields.io/github/stars/badmuriss/unslop?style=flat-square" alt="GitHub stars"></a>
   <a href="https://github.com/badmuriss/unslop/commits/main"><img src="https://img.shields.io/github/last-commit/badmuriss/unslop?style=flat-square" alt="last commit"></a>
 </p>
 
 <p align="center">
-  <a href="#what-is-new-in-20">The four modes</a> ·
+  <a href="#the-five-modes">The five modes</a> ·
   <a href="#the-brazilian-portuguese-layer">The pt-br layer</a> ·
   <a href="#install">Install</a> ·
   <a href="#credit">Credit</a>
@@ -31,7 +31,7 @@ Or plain git:
 git clone https://github.com/badmuriss/unslop ~/.claude/skills/unslop
 ```
 
-Then ask for any of the four modes: "write a launch post about X", "unslop this", "is this text AI?", "score this". Any capable LLM can also run it as a plain instruction set, as long as it can read the four files.
+Then ask for a mode: "write a launch post about X", "unslop this", "is this text AI?", "score this", or "remove the AI watermark from this file". Any capable LLM can also run it as a plain instruction set.
 
 Works at three layers: the words on the page, the choices underneath them, and Brazilian Portuguese, which the English tell lists get wrong.
 
@@ -39,9 +39,9 @@ Most humanizers stop at the surface. They kill an em dash, swap "delve" for "exp
 
 v1 cleaned both layers. v2 turns that into a system that also writes, audits and grades.
 
-## What is new in 2.0
+## The five modes
 
-**Four modes.** v1 only edited. Now the entry point decides the pipeline.
+The entry point selects the smallest pipeline for the request.
 
 | Mode | You say | It does |
 |------|---------|---------|
@@ -49,6 +49,9 @@ v1 cleaned both layers. v2 turns that into a system that also writes, audits and
 | **edit** | "unslop this", "humanize this" | the v1 flow, plus the eval at the end |
 | **detect** | "is this AI?" | audit only, nothing rewritten |
 | **score** | "grade this" | rubric with a number and a reason per dimension |
+| **clean** | "remove watermark", "clean AI metadata" | inspect, clean Unicode or provenance metadata, then verify |
+
+The clean mode absorbs the former `remove-ai-marks` skill. It includes deterministic scripts for supported text, image and document containers. It reports exactly what changed and does not claim that statistical rewriting proves human authorship.
 
 **Detect names the pattern.** The failure mode of every AI detector, human or machine, is the confident vibe check. This mode is not allowed to say "this feels like AI". Every finding is a row: line number, named pattern, the exact excerpt, severity. Nothing found means nothing found, and it says so instead of inventing a case.
 
@@ -101,6 +104,9 @@ SKILL.md              orchestration, modes, gates, surface + narrative layers
 eval.md               20 binary checks, run on the skill's own output
 references/ptbr.md    Brazilian Portuguese layer + house rules
 references/rubrica.md 5 dimensions, 1 to 10, cut at 35/50
+references/watermark-removal.md CLEAN workflow and routing
+references/watermarks/ watermark classes, vendors, formats and ethics
+scripts/               deterministic watermark inspection and cleaning
 ```
 
 ## Dogfooding
