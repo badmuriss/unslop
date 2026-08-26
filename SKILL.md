@@ -1,6 +1,6 @@
 ---
 name: unslop
-description: "Sistema de escrita e higiene de conteúdo em 5 modos (WRITE, EDIT, DETECT, SCORE, CLEAN), com camada pt-br e remoção verificável de Unicode e metadados de proveniência. Use para escrever, revisar, humanizar, detectar marcas de IA, avaliar prosa ou limpar conteúdo próprio. Não use para texto técnico de máquina, como commit ou schema."
+description: "Sistema de escrita em 5 modos (WRITE, EDIT, DETECT, SCORE, CLEAN), com camada pt-br e roteamento de limpeza de marcas em prosa. Use para escrever, revisar, humanizar, detectar marcas de IA, avaliar texto ou pedir limpeza de conteúdo próprio. Para imagens, documentos e metadados, use remove-ai-marks."
 metadata:
   version: 2.1.0
 allowed-tools:
@@ -10,7 +10,6 @@ allowed-tools:
   - Grep
   - Glob
   - AskUserQuestion
-  - Bash
 ---
 
 # Unslop: a writing system (surface + narrative + pt-br)
@@ -43,7 +42,7 @@ AskUserQuestion, then proceed.
 | **SCORE** | "avalia esse texto", "dá uma nota" | rubric per dimension with justification |
 | **CLEAN** | "remove watermark", "limpa marcas de IA", "remove C2PA/metadados/Unicode invisível" | cleaned copy + inspection summary |
 
-`EDIT` changes prose and voice. `CLEAN` performs deterministic hygiene on text or supported files. When the request includes both, run `CLEAN` first and then `EDIT`; never describe stylistic rewriting as proof that a text is human-written.
+`EDIT` changes prose and voice. `CLEAN` separates stylistic rewriting from deterministic watermark removal. When the request includes both, remove deterministic marks first and then run `EDIT`; never describe stylistic rewriting as proof that a text is human-written.
 
 ## Gate 1: language (run first)
 
@@ -150,17 +149,13 @@ verdict, and the single highest-leverage fix. No rewriting unless asked.
 
 ### CLEAN
 
-Read `references/watermark-removal.md` and only the watermark references it routes to. Inspect before changing anything, write a sibling `*.cleaned.*` file unless the user explicitly requests in-place cleaning, then inspect the output again.
+Classify the request before acting:
 
-Use the bundled scripts for deterministic work:
+- For prose that merely sounds generated, use `EDIT` and report it as a stylistic rewrite.
+- For invisible Unicode, C2PA, EXIF/XMP, images, PDFs, office documents, HTML, SVG, or container metadata, load `remove-ai-marks` and follow its inspect, clean, verify workflow.
+- When both apply, run `remove-ai-marks` first and `EDIT` second.
 
-```bash
-python3 scripts/inspect_file.py --json INPUT
-python3 scripts/clean_file.py INPUT -o OUTPUT
-python3 scripts/inspect_file.py --json OUTPUT
-```
-
-Report what was verifiably removed. Treat statistical rewriting and unsupported pixel, audio, or video marks as residual risk, never as a successful deterministic removal. Operate only on content the user owns or is authorized to modify.
+Report deterministic removal separately from best-effort rewriting. Never claim either proves human authorship. Operate only on content the user owns or is authorized to modify.
 
 ## Surface layer
 
@@ -312,9 +307,6 @@ not. The pt-br version of this calibration is in `references/ptbr.md`.
 | `references/ptbr.md` | the text is Brazilian Portuguese. Mandatory, every mode. Includes the Outis house rules. |
 | `references/rubrica.md` | modes WRITE and SCORE. Optional in EDIT when the user asks how good it is. |
 | `eval.md` | after every WRITE or EDIT, before delivering. Always. |
-| `references/watermark-removal.md` | CLEAN mode. Routes to format, vendor, and ethics details. |
-| `references/watermarks/` | only the CLEAN detail relevant to the detected mark or container. |
-| `scripts/` | deterministic inspection and cleaning used by CLEAN mode. |
 
 Do not paraphrase these files from memory. Read them.
 

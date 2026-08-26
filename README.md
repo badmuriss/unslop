@@ -1,6 +1,6 @@
 <p align="center"><img src="docs/banner.png" width="720" alt="unslop wordmark on a dark ink background, the letters slop struck through in amber, with the tagline: a writing system that removes the AI accent"></p>
 
-<p align="center"><b>A writing and content-hygiene system that drafts, edits, audits, scores and cleans AI traces.</b></p>
+<p align="center"><b>A writing system that drafts, edits, audits, scores and routes watermark cleanup for prose.</b></p>
 
 <p align="center">
   <a href="#license"><img src="https://img.shields.io/badge/license-CC--BY--SA--4.0-blue?style=flat-square" alt="CC BY-SA 4.0 license"></a>
@@ -49,9 +49,9 @@ The entry point selects the smallest pipeline for the request.
 | **edit** | "unslop this", "humanize this" | the v1 flow, plus the eval at the end |
 | **detect** | "is this AI?" | audit only, nothing rewritten |
 | **score** | "grade this" | rubric with a number and a reason per dimension |
-| **clean** | "remove watermark", "clean AI metadata" | inspect, clean Unicode or provenance metadata, then verify |
+| **clean** | "remove watermark", "clean AI metadata" | rewrite prose or route deterministic cleanup to `remove-ai-marks` |
 
-The clean mode absorbs the former `remove-ai-marks` skill. It includes deterministic scripts for supported text, image and document containers. It reports exactly what changed and does not claim that statistical rewriting proves human authorship.
+The clean mode distinguishes prose rewriting from technical removal. Text style stays here; invisible Unicode, images, C2PA, EXIF/XMP, PDFs and other containers go to the dedicated `remove-ai-marks` skill. Neither path claims to prove human authorship.
 
 **Detect names the pattern.** The failure mode of every AI detector, human or machine, is the confident vibe check. This mode is not allowed to say "this feels like AI". Every finding is a row: line number, named pattern, the exact excerpt, severity. Nothing found means nothing found, and it says so instead of inventing a case.
 
@@ -104,9 +104,6 @@ SKILL.md              orchestration, modes, gates, surface + narrative layers
 eval.md               20 binary checks, run on the skill's own output
 references/ptbr.md    Brazilian Portuguese layer + house rules
 references/rubrica.md 5 dimensions, 1 to 10, cut at 35/50
-references/watermark-removal.md CLEAN workflow and routing
-references/watermarks/ watermark classes, vendors, formats and ethics
-scripts/               deterministic watermark inspection and cleaning
 ```
 
 ## Dogfooding
