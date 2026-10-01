@@ -29,10 +29,7 @@ Three layers, loaded as needed:
 - **Narrative / discourse** (from StoryScope): what the text over-explains, how tidy it is, whether it names the real world. In this file.
 - **pt-br**: the Brazilian Portuguese tell list, which the English list does not cover. In `references/ptbr.md`, loaded on demand.
 
-## Modes
-
-Pick one before anything else. If the request is ambiguous, ask once with
-AskUserQuestion, then proceed.
+Pick one mode before acting. If the request is ambiguous because essential information is missing, ask a concise clarifying question. Use AskUserQuestion when the host provides it; otherwise ask normally. Do not require that specific tool or ask questions already answered by the user.
 
 | Mode | Trigger | Output |
 |------|---------|--------|

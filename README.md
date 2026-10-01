@@ -28,10 +28,13 @@ npx skills add badmuriss/unslop
 Or plain git:
 
 ```bash
-git clone https://github.com/badmuriss/unslop ~/.claude/skills/unslop
+git clone https://github.com/badmuriss/unslop ~/.agents/skills/unslop
 ```
 
 Then ask for a mode: "write a launch post about X", "unslop this", "is this text AI?", "score this", or "remove the AI watermark from this file". Any capable LLM can also run it as a plain instruction set.
+
+Clarify only material missing information. Use the current host's question tool
+when available, or ask directly in chat; no particular tool name or harness is required.
 
 Works at three layers: the words on the page, the choices underneath them, and Brazilian Portuguese, which the English tell lists get wrong.
 
